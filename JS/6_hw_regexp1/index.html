@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        textarea, input, button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        textarea {
+            width: 400px;
+            height: 100px;
+            border: 2px solid black;
+            overflow: hidden;
+        }
+        input {
+            width: 300px;
+            border: 2px solid black;
+        }
+        button {
+            border: 2px solid black;
+            cursor: pointer;
+        }
+        .task {
+            border-bottom: 2px solid black;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="task" id="task1">
+        <h3>Task 1</h3>
+        <textarea id="textArea1">This is a test text with some example words.</textarea>
+        <input type="text" id="input1" placeholder="Enter text to search">
+        <button onclick="checkMatch()">Check</button>
+    </div>
+    
+    <div class="task" id="task2">
+        <h3>Task 2</h3>
+        <textarea id="textArea2">Some text 😊 with different 😊😊 emoji 😊</textarea>
+        <button onclick="duplicateEmoji()">Duplicate Emojis</button>
+    </div>
+    
+    <div class="task" id="task3">
+        <h3>Task 3</h3>
+        <textarea id="textArea3">Here is some example text to replace.</textarea>
+        <button onclick="replaceWords()">Replace</button>
+        <button onclick="addInput()">+</button>
+        <div id="inputContainer"></div>
+    </div>
+
+    <script>
+        function checkMatch() {
+            let textarea = document.getElementById("textArea1");
+            let inputText = document.getElementById("input1").value;
+            if (textarea.value.includes(inputText) && inputText !== "") {
+                textarea.style.borderColor = "lime";
+            } else {
+                textarea.style.borderColor = "orange";
+            }
+        }
+        
+        function duplicateEmoji() {
+            let textarea = document.getElementById("textArea2");
+            textarea.value = textarea.value.replace(/😊/g, "😊😊");
+        }
+        
+        function addInput() {
+            let container = document.getElementById("inputContainer");
+            let newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.classList.add("wordInput");
+            newInput.ondblclick = function() { container.removeChild(newInput); };
+            container.appendChild(newInput);
+        }
+        
+        function replaceWords() {
+            let textarea = document.getElementById("textArea3");
+            let inputs = document.querySelectorAll(".wordInput");
+            let text = textarea.value;
+            
+            inputs.forEach(input => {
+                let word = input.value.trim();
+                if (word !== "") {
+                    let regex = new RegExp(word, "g");
+                    let replacement = "*".repeat(word.length);
+                    text = text.replace(regex, replacement);
+                }
+            });
+            
+            textarea.value = text;
+        }
+    </script>
+</body>
+</html>
