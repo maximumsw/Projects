@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кастомне контекстне меню</title>
+    <style>
+
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+#context-menu {
+    position: absolute;
+    border: 1px solid black;
+    background-color: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.menu-item:hover {
+    background-color: lightgray;
+}
+
+.color-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+
+    </style>
+</head>
+<body>
+    <div id="context-menu" class="hidden">
+        <div class="menu-item" data-color="white">
+            white <span class="color-box" style="background-color: white;"></span>
+        </div>
+        <div class="menu-item" data-color="red">
+            red <span class="color-box" style="background-color: red;"></span>
+        </div>
+        <div class="menu-item" data-color="yellow">
+            yellow <span class="color-box" style="background-color: yellow;"></span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

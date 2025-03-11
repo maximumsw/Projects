@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Typing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .word span.correct {
+            color: green;
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="word"></h1>
+    <input type="text" id="inputField" class="hidden" autofocus>
+    <div id="errorCount">0</div>
+    
+    <script>
+        const words = ["apple", "banana", "orange", "grape", "cherry"];
+        let word = words[Math.floor(Math.random() * words.length)];
+        let wordContainer = document.querySelector(".word");
+        let inputField = document.getElementById("inputField");
+        let errorCount = document.getElementById("errorCount");
+        let currentIndex = 0;
+        let errors = 0;
+        let isInputVisible = false;
+        
+        wordContainer.innerHTML = word.split('').map(letter => `<span>${letter}</span>`).join('');
+        
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Tab") {
+                event.preventDefault();
+                isInputVisible = !isInputVisible;
+                inputField.classList.toggle("hidden", !isInputVisible);
+                if (isInputVisible) inputField.focus();
+            }
+        });
+        
+        inputField.addEventListener("keydown", (event) => {
+            if (event.key.length === 1) {
+                if (event.key === word[currentIndex]) {
+                    document.querySelectorAll(".word span")[currentIndex].classList.add("correct");
+                    currentIndex++;
+                    if (currentIndex === word.length) {
+                        inputField.remove();
+                    }
+                } else {
+                    errors++;
+                    errorCount.textContent = errors;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
